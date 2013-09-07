@@ -1,0 +1,48 @@
+<h1>Stream</h1>
+<table>
+  <thead>
+    <tr>
+      <th>uuid</th>
+      <th>event</th>
+      <th>parent</th>
+      <th>value</th>
+      <th>reason</th>
+  </thead>
+  <tbody>
+  {{#each content}}
+    <tr>
+      <td>{{guid}}</td>
+      <td>{{eventName}}</td>
+      <td>{{parent}}</td>
+      <td><pre>{{value}}</pre></td>
+      <td><pre>{{reason}}</pre></td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+<h1>Topsort</h1>
+<table>
+  <thead>
+    <tr>
+      <th>guid</th>
+      <th>children</th>
+      <th>parent</th>
+      <th>value</th>
+      <th>reason</th>
+      <th>state</th>
+  </thead>
+  <tbody>
+  {{#each topsort}}
+    <tr>
+      <td>{{guid}}</td>
+      <td>{{children}}</td>
+      <td>{{parent}}</td>
+      <td>{{value}}</td>
+      <td>{{reason}}</td>
+      <td>{{state}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</ul>
+
+{{view 'tree'}}
