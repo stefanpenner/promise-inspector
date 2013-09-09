@@ -44,10 +44,10 @@ var Component = Ember.Component.extend({
 
     var force = d3.layout.force().
       size([width, height]).
-      linkDistance(50).
+      linkDistance(30).
       links(links).
       nodes(nodes).
-      charge(-100);
+      charge(-50);
 
     return force;
   }.property().readOnly(),
@@ -108,10 +108,13 @@ var Component = Ember.Component.extend({
 
     link.enter().
       insert('line').
-      classed('link', true);
+      classed('link', true).
+      attr("stroke-width", "5").
+        attr("marker-end", "url(#triangle)");
 
     node.enter().
       append('circle').
+      attr("class", function(data) { return data.get('guid'); }).
       classed('node', true).
       attr('r', 5).
       on('mousedown', mousedown).call(force.drag);

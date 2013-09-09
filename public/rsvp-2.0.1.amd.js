@@ -430,7 +430,8 @@ define("rsvp/promise",
 
       this.constructor.trigger('created', {
         guid: this._guid,
-        eventName: 'created'
+        eventName: 'created',
+        promise: this
       });
 
       try {
