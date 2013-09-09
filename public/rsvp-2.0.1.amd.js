@@ -141,7 +141,7 @@ define("rsvp/defer",
     "use strict";
     var Promise = __dependency1__.Promise;
 
-    function defer() {
+    function defer(label) {
       var deferred = {
         // pre-allocate shape
         resolve: undefined,
@@ -152,7 +152,7 @@ define("rsvp/defer",
       deferred.promise = new Promise(function(resolve, reject) {
         deferred.resolve = resolve;
         deferred.reject = reject;
-      });
+      }, label);
 
       return deferred;
     }
@@ -379,9 +379,11 @@ define("rsvp/promise",
     var guidKey = 'rsvp_' + new Date().getTime();
     var promiseIndex= 0;
 
-    var Promise = function(resolver) {
+    var Promise = function(resolver, label) {
       var promise = this,
       resolved = false;
+
+      this._label = label;
 
       if (typeof resolver !== 'function') {
         throw new TypeError('You must pass a resolver function as the sole argument to the promise constructor');
@@ -409,7 +411,8 @@ define("rsvp/promise",
         this.constructor.trigger('fulfilled', {
           guid: this._guid,
           value: event.detail,
-          eventName: 'fulfilled'
+          eventName: 'fulfilled',
+          label: this._label
         });
      }, this);
 
@@ -419,7 +422,8 @@ define("rsvp/promise",
         this.constructor.trigger('rejected', {
           guid: this._guid,
           reason: event.detail,
-          eventName: 'rejected'
+          eventName: 'rejected',
+          label: this._label
         });
       }, this);
 
@@ -431,6 +435,7 @@ define("rsvp/promise",
       this.constructor.trigger('created', {
         guid: this._guid,
         eventName: 'created',
+        label: this._label,
         promise: this
       });
 
@@ -479,6 +484,7 @@ define("rsvp/promise",
 
     Promise.prototype = {
       _guid: undefined,
+      _label: undefined,
       constructor: Promise,
 
       isRejected: undefined,
@@ -489,7 +495,8 @@ define("rsvp/promise",
       then: function(done, fail) {
         this.off('error', onerror);
 
-        var thenPromise = new this.constructor(function() {});
+        var label = "" + (this._label || 'unlabeled') + " > ";
+        var thenPromise = new this.constructor(function() {}, label);
 
         if (this.isFulfilled) {
           config.async(function(promise) {
@@ -514,7 +521,8 @@ define("rsvp/promise",
         this.constructor.trigger('chained', {
           parent: this._guid,
           child: thenPromise._guid,
-          eventName: 'chained'
+          eventName: 'chained',
+          label: this._label
         });
 
         return thenPromise;
@@ -616,10 +624,10 @@ define("rsvp/resolve",
     "use strict";
     var Promise = __dependency1__.Promise;
 
-    function resolve(thenable) {
+    function resolve(thenable, label) {
       return new Promise(function(resolve, reject) {
         resolve(thenable);
-      });
+      }, label);
     }
 
 
