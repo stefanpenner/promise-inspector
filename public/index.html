@@ -20,15 +20,20 @@
   <script src="/assets/templates.js"></script>
   <!-- endbuild -->
 <style>
-
+rect {
+  fill: none;
+  pointer-events: all;
+}
+  
 .node {
-  stroke: #fff;
-  stroke-width: 2px;
+  fill: #000;
+}
+.node.selected {
+  fill: red;
 }
 
 .link {
-  fill: none;
-  stroke: #000;
+  stroke: #999;
 }
 </style>
 </head>

@@ -1,12 +1,31 @@
 var promises = Ember.A();
+var edges= Ember.A();
 
 var Promise = Ember.Object.extend({
 });
 
 Promise.reopenClass({
   all: promises,
+  edges: edges,
+
+  addEdge: function(event) {
+    var source = Promise.findOrCreate(event.parent);
+    var target = Promise.findOrCreate(event.child);
+
+    edges.push({
+      source: source,
+      target: target
+    });
+  },
+
   find: function(guid){
     return promises.findProperty('guid', guid);
+  },
+
+  findOrCreate: function(guid) {
+    return promises.findProperty('guid', guid) || Promise.create({
+      guid: guid
+    });
   },
   updateOrCreate: function(guid, properties){
     console.log('updateOrCreate', guid, properties);

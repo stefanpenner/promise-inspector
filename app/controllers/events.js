@@ -1,7 +1,10 @@
 var get = Ember.get;
 import Promise from 'appkit/models/promise';
 var EventsController = Ember.ArrayController.extend({
-  topsort: null,
+  topsort: Ember.computed(function(){
+    return [];
+  }),
+
   updateTopSort: function(){
     var dag = new Ember.DAG();
 
@@ -20,6 +23,7 @@ var EventsController = Ember.ArrayController.extend({
       var guid = get(entry, 'guid');
       var parent = get(entry, 'parent');
 
+      Promise.addEdge(entry);
       dag.addEdge(guid, parent);
     });
 
@@ -29,7 +33,9 @@ var EventsController = Ember.ArrayController.extend({
       topsort.push(Promise.find(vertex.name));
     });
 
-    this.set('topsort', topsort);
+    var oldTopsort  = this.get('topsort');
+
+    oldTopsort.replace(0, oldTopsort.get('length'), topsort);
   },
 
   contentDidChange: function(){
