@@ -15,7 +15,8 @@ function assembler(app) {
     var guid = event.guid || event.parent;
     var promise = Promise.updateOrCreate(guid, event);
 
-    Promise.all.pushObject(promise);
+    Ember.run.join(Promise.all, 'pushObject', promise);
+    // Promise.all.pushObject(promise);
 
     var state = promise.get('state');
     promise.set('state', event.eventName);
@@ -25,11 +26,17 @@ function assembler(app) {
 
   function chain(event) {
     var guid = event.guid || event.parent;
+    delete event.parent;
     var promise = Promise.updateOrCreate(guid, event);
-    Promise.all.pushObject(promise);
+
+    Ember.run.join(Promise.all, 'pushObject', promise);
+    // Promise.all.pushObject(promise);
 
     var children = promise.get('children') || Ember.A();
-    children.push(event.child);
+    var child = Promise.findOrCreate(event.child);
+
+    child.set('parent', promise);
+    children.push(child);
     promise.set('children', children);
 
     Ember.run.join(events, 'pushObject', event);
@@ -45,7 +52,8 @@ function assembler(app) {
         promise.set('state', 'created');
       }
 
-      Promise.all.pushObject(promise);
+      Ember.run.join(Promise.all, 'pushObject', event);
+      // Promise.all.pushObject(promise);
       Ember.run.join(events, 'pushObject', event);
     });
   }

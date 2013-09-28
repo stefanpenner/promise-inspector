@@ -2,6 +2,17 @@ var promises = Ember.A();
 var edges= Ember.A();
 
 var Promise = Ember.Object.extend({
+
+  parent: null,
+
+  level: function() {
+    var parent = this.get('parent');
+    if (!parent) {
+      return 0;
+    }
+    return parent.get('level') + 1;
+  }.property('parent')
+
 });
 
 Promise.reopenClass({
@@ -28,7 +39,7 @@ Promise.reopenClass({
     });
   },
   updateOrCreate: function(guid, properties){
-    console.log('updateOrCreate', guid, properties);
+    // console.log('updateOrCreate', guid, properties);
     var entry = Promise.find(guid);
 
     if (entry) {
