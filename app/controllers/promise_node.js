@@ -4,13 +4,33 @@ var PromiseNodeController = Ember.ObjectController.extend({
   }.property('level'),
 
   settledValue: function() {
-    if (this.get('state') === 'fulfilled') {
+    if (this.get('isFulfilled')) {
       return inspect(this.get('value'));
-    } else if (this.get('state') === 'rejected') {
+    } else if (this.get('isRejected')) {
       return inspect(this.get('reason'));
+    } else {
+      return '--';
     }
 
-  }.property('value')
+  }.property('value'),
+
+  label: function() {
+    return this.get('model.label') || '<Unknown Promise>';
+  }.property('model.label'),
+
+  state: function() {
+    var state = this.get('model.state');
+    if (this.get('isFulfilled')) {
+      return 'Fullfilled';
+    } else if (this.get('isRejected')) {
+      return 'Rejected';
+    } else if (this.get('parent') && !this.get('parent.isSettled')) {
+      return 'Waiting for parent';
+    } else {
+      return 'Pending';
+    }
+
+  }.property('model.state')
 
 });
 

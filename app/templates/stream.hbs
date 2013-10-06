@@ -1,0 +1,23 @@
+<h1>Stream</h1>
+<table>
+  <thead>
+    <tr>
+      <th>uuid</th>
+      <th>event</th>
+      <th>parent</th>
+      <th>value</th>
+      <th>reason</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each model}}
+    <tr>
+      <td>{{guid}}</td>
+      <td>{{eventName}}</td>
+      <td>{{parent.guid}}</td>
+      <td><pre>{{value}}</pre></td>
+      <td><pre>{{reason}}</pre></td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

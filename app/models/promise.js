@@ -2,6 +2,11 @@ var promises = Ember.A();
 var edges= Ember.A();
 
 var Promise = Ember.Object.extend({
+  init: function() {
+    this.get('createdAt', new Date());
+  },
+
+  createdAt: null,
 
   parent: null,
 
@@ -11,45 +16,21 @@ var Promise = Ember.Object.extend({
       return 0;
     }
     return parent.get('level') + 1;
-  }.property('parent')
+  }.property('parent.level'),
+
+  isSettled: function() {
+    return this.get('isFulfilled') || this.get('isRejected');
+  }.property('state'),
+
+  isFulfilled: function() {
+    return this.get('state') === 'fulfilled';
+  }.property('state'),
+
+  isRejected: function() {
+    return this.get('state') === 'rejected';
+  }.property('state')
 
 });
 
-Promise.reopenClass({
-  all: promises,
-  edges: edges,
-
-  addEdge: function(event) {
-    var source = Promise.findOrCreate(event.parent);
-    var target = Promise.findOrCreate(event.child);
-
-    edges.push({
-      source: source,
-      target: target
-    });
-  },
-
-  find: function(guid){
-    return promises.findProperty('guid', guid);
-  },
-
-  findOrCreate: function(guid) {
-    return promises.findProperty('guid', guid) || Promise.create({
-      guid: guid
-    });
-  },
-  updateOrCreate: function(guid, properties){
-    // console.log('updateOrCreate', guid, properties);
-    var entry = Promise.find(guid);
-
-    if (entry) {
-      entry.setProperties(properties);
-    } else {
-      entry = Promise.create(properties);
-    }
-
-    return entry;
-  }
-});
 
 export default Promise;

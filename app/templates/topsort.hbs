@@ -1,0 +1,25 @@
+<h1>Topsort</h1>
+<table>
+  <thead>
+    <tr>
+      <th>guid</th>
+      <th>children</th>
+      <th>parent</th>
+      <th>value</th>
+      <th>reason</th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each model}}
+    <tr>
+      <td>{{guid}}</td>
+      <td>{{children}}</td>
+      <td>{{parent.guid}}</td>
+      <td>{{value}}</td>
+      <td>{{reason}}</td>
+      <td>{{state}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

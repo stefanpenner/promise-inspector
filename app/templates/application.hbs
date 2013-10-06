@@ -1,1 +1,30 @@
-{{outlet}}
+<div class="app__nav-holder">
+  <nav>
+      <ul class="main-nav__list">
+        <li class="main-nav__item">
+          {{#link-to "promise_tree"}}
+            Promise Tree
+          {{/link-to}}
+        </li>
+        <li class="main-nav__item">
+          {{#link-to "stream"}}
+            Stream
+          {{/link-to}}
+        </li>
+        <li class="main-nav__item">
+          {{#link-to "topsort"}}
+            Top Sort
+          {{/link-to}}
+        </li>
+        <li class="main-nav__item">
+          {{#link-to "promise_force"}}
+            Promise Force
+          {{/link-to}}
+        </li>
+      </ul>
+    </nav>
+</div>
+<div class="app__main">
+  {{outlet}}
+</div>
+

@@ -1,5 +1,5 @@
 var ApplicationView = Ember.View.extend({
-  classNames: ['expand']
+  classNames: ['expand', 'app']
 });
 
 export default ApplicationView;

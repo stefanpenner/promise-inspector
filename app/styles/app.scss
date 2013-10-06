@@ -37,6 +37,67 @@ a {
 }
 
 /**
+  APP
+  ===
+*/
+
+.app {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  height: 100%;
+  position: relative;
+}
+
+.app__nav-holder {
+  width: 180px;
+  background: #d6dde5;
+}
+
+
+.app__main {
+  -webkit-flex: 1;
+  flex: 1;
+  height: 100%;
+  overflow: auto;
+  border-left: solid 1px #828282;
+}
+
+/**
+  MAIN-NAV
+  ========
+*/
+
+.main-nav__list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-nav__item {
+  display: block;
+}
+
+.main-nav__item > a {
+  position: relative;
+  text-decoration: none;
+  display: block;
+  height: 33px;
+  padding-left: 40px;
+  color: #333;
+  font-size: 12px;
+  line-height: 33px;
+}
+
+.main-nav__item > a.active {
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0, 0.35);
+  background: linear-gradient(to bottom, #5a91d4, #1654aa);
+  box-shadow: inset 0 1px 0 #4480c8;
+}
+
+/**
  TABLE-TREE
  ==========
 */
