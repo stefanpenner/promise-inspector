@@ -1,5 +1,23 @@
+var COLOR_MAP = {
+  red: '#ff2717',
+  blue: '#174fff',
+  green: '#006400'
+};
+
 var PromiseNodeController = Ember.ObjectController.extend({
   style: function() {
+    var color = '';
+    if (this.get('isFulfilled')) {
+      color = 'green';
+    } else if (this.get('isRejected')) {
+      color = 'red';
+    } else {
+      color = 'blue';
+    }
+    return 'color:' + COLOR_MAP[color];
+  }.property('model.state'),
+
+  labelStyle: function() {
     return 'padding-left: ' + ((+this.get('level') * 10) + 5) + "px";
   }.property('level'),
 
