@@ -1,8 +1,10 @@
 function Routes() {
   // // routes/resources
-  // this.resource('posts', function() {
-  //   this.route('new');
-  // });
+  this.route('old');
+  this.route('promise_tree');
+  this.route('stream');
+  this.route('topsort');
+  this.route('promise_force');
 }
 
 export default Routes;

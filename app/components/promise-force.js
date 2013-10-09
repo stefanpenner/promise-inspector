@@ -119,7 +119,7 @@ var Component = Ember.Component.extend({
       attr('r', 5).
       on('mousedown', mousedown).call(force.drag);
 
-    console.log("updateData");
+    // console.log("updateData");
     force.start();
   }
 // {{promise-force links=links nodes=promise}}

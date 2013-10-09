@@ -390,7 +390,7 @@ define("rsvp/promise",
       }
 
       if (!(promise instanceof Promise)) {
-        return new Promise(resolver);
+        return new Promise(resolver, label);
       }
 
       var resolvePromise = function(value) {

@@ -2,43 +2,35 @@ var promises = Ember.A();
 var edges= Ember.A();
 
 var Promise = Ember.Object.extend({
-});
-
-Promise.reopenClass({
-  all: promises,
-  edges: edges,
-
-  addEdge: function(event) {
-    var source = Promise.findOrCreate(event.parent);
-    var target = Promise.findOrCreate(event.child);
-
-    edges.push({
-      source: source,
-      target: target
-    });
+  init: function() {
+    this.get('createdAt', new Date());
   },
 
-  find: function(guid){
-    return promises.findProperty('guid', guid);
-  },
+  createdAt: null,
 
-  findOrCreate: function(guid) {
-    return promises.findProperty('guid', guid) || Promise.create({
-      guid: guid
-    });
-  },
-  updateOrCreate: function(guid, properties){
-    console.log('updateOrCreate', guid, properties);
-    var entry = Promise.find(guid);
+  parent: null,
 
-    if (entry) {
-      entry.setProperties(properties);
-    } else {
-      entry = Promise.create(properties);
+  level: function() {
+    var parent = this.get('parent');
+    if (!parent) {
+      return 0;
     }
+    return parent.get('level') + 1;
+  }.property('parent.level'),
 
-    return entry;
-  }
+  isSettled: function() {
+    return this.get('isFulfilled') || this.get('isRejected');
+  }.property('state'),
+
+  isFulfilled: function() {
+    return this.get('state') === 'fulfilled';
+  }.property('state'),
+
+  isRejected: function() {
+    return this.get('state') === 'rejected';
+  }.property('state')
+
 });
+
 
 export default Promise;

@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                      'jshint',
                      'copy:stage',
                      // Uncomment this line & `npm install --save-dev grunt-sass` for SASS support.
-                     // 'sass:compile',
+                     'sass:compile',
                      // Uncomment this line & `npm install --save-dev grunt-contrib-less` for LESS support.
                      // 'less:compile'
                      // Uncomment this line & `npm install --save-dev grunt-contrib-stylus` for stylus/nib support.
